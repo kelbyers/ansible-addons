@@ -1,0 +1,6 @@
+##
+# set the default system time zone on a Fedora/RHEL based system
+---
+- name: set time zone to $timezone
+  action: copy src=/usr/share/zoneinfo/$timezone dest=/etc/localtime
+  user: root
