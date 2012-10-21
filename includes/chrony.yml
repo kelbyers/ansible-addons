@@ -2,10 +2,15 @@
 # set up a chrony client
 ---
 - name: install chrony
+  tags: chronyinst
   action: yum state=installed pkg=chrony
 
 - name: config chrony
   action: template src=templates/chrony.j2 dest=/etc/chrony.conf
+  tags: chronyconf
+  notify:
+    - restart chronyd
 
 - name: enable/start chrony service
+  tags: chronyservice
   action: service name=chronyd state=started enabled=yes
