@@ -3,4 +3,3 @@
 ---
 - name: set time zone to $timezone
   action: copy src=/usr/share/zoneinfo/$timezone dest=/etc/localtime
-  user: root
