@@ -1,0 +1,5 @@
+##
+# set up a chrony client
+---
+- name: install chrony
+  action: yum state=installed pkg=chrony
