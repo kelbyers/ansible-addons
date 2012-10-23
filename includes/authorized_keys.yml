@@ -1,14 +1,6 @@
 ##
-# play to assemble an authorized_keys file from parts in a subdirectory
+# play to add ssh authorized keys from files in a directory
 ---
-- name: make authkeys parts dir $user
-  action: file path=$home/.ssh/authkeys state=directory mode=0600
-          owner=$user
-
-- name: push keys $user $srcdir
-  action: copy dest=$home/.ssh/authkeys/ src=$item owner=$user
+- name: add keys for $user from dir $srcdir
+  authorized_key: user=$user key="$FILE($item)"
   with_fileglob: $srcdir/*
-
-- name: assemble keys for $user
-  assemble: dest=$home/.ssh/authorized_keys src=$home/.ssh/authkeys/
-            backup=yes owner=$user mode=0600
