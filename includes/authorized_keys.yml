@@ -1,0 +1,6 @@
+##
+# play to add ssh authorized keys from files in a directory
+---
+- name: add keys for $user from dir $srcdir
+  authorized_key: user=$user key="$FILE($item)"
+  with_fileglob: $srcdir/*
