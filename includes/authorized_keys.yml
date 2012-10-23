@@ -4,4 +4,6 @@
 - name: add keys for $user from dir $srcdir
   authorized_key: user=$user key="$FILE($item)"
   with_fileglob: $srcdir/*
-  tags: ssh,sshkeys
+  tags:
+    - ssh
+    - sshkeys
