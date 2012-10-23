@@ -1,0 +1,9 @@
+##
+# play to assemble an authorized_keys file from parts in a subdirectory
+---
+- name: make authkeys parts dir $user
+  action: file path=$home/.ssh/authkeys state=directory mode=0600
+          owner=$user
+
+# - name: push_keys $user $srcdir
+#   action: copy dest=$home/.ssh/authkeys/ src=$item owner=$user
