@@ -1,0 +1,23 @@
+{% for entry in repo.entries %}
+[{{ entry.id }}]
+name = {{ entry.name }}
+{% if entry.baseurl is defined %}
+baseurl ={% if entry.baseurl is string %} {{ entry.baseurl }}
+{% else %}{% for baseurl in entry.baseurl %} {{ baseurl }}{% endfor %}
+
+{% endif %}
+{% endif %}
+{% if entry.enabled is defined %}
+enabled = {{ entry.enabled }}
+{% endif %}
+{% if entry.gpgcheck is defined %}
+gpgcheck = {{ entry.gpgcheck }}
+{% endif %}
+{% if entry.gpgkey is defined %}
+gpgkey = {{ entry.gpgkey }}
+{% endif %}
+{% if entry.mirrorlist is defined %}
+mirrorlist = {{ entry.mirrorlist }}
+{% endif %}
+
+{% endfor %}

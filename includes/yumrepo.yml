@@ -1,0 +1,7 @@
+---
+- name: add repo
+  action: template src=templates/yumrepo.j2 dest="/etc/yum.repos.d/${repo.file}.repo"
+  tags:
+    - yum
+    - repo
+    - yumrepo
