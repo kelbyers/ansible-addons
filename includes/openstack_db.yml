@@ -1,0 +1,14 @@
+##
+# Install packages and do config to setting up the openstack db
+---
+- name: install openstack database stuff
+  yum: enablerepo=updates-testing state=installed name=$item
+  tags:
+    - openstack_pkgs
+    - openstack_db
+    - nova
+    - glance
+  with_items:
+    - openstack-nova
+    - openstack-glance
+    - mysql-server
