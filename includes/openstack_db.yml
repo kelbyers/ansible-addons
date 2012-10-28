@@ -11,4 +11,33 @@
   with_items:
     - openstack-nova
     - openstack-glance
-    - mysql-server
+
+- name: install mysql-server
+  yum: pkg=mysql-server
+  notify: set mysql password
+  tags:
+    - openstack_db
+    - mysql
+
+- name: ensure mysqld enabled
+  service: name=mysqld enabled=yes state=running
+  tags:
+    - openstack_db
+    - mysql
+    - openstack_db_init
+    - nova
+    - glance
+
+- name: configure mysql for openstack nova
+  command: /bin/openstack-db --service nova --init --rootpw $rootpw -p $svcpw --yes
+  tags:
+    - openstack_db
+    - openstack_db_init
+    - nova
+
+- name: configure mysql for openstack glance
+  command: /bin/openstack-db --service glance --init --rootpw $rootpw -p $svcpw --yes
+  tags:
+    - openstack_db
+    - openstack_db_init
+    - glance
