@@ -1,0 +1,3 @@
+---
+- name: set mysql password
+  command: /usr/bin/mysqladmin --user=$user password $password
