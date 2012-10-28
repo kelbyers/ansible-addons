@@ -11,6 +11,7 @@
   with_items:
     - openstack-nova
     - openstack-glance
+    - qpid-cpp-server-daemon
 
 - name: install mysql-server
   yum: pkg=mysql-server
@@ -29,15 +30,37 @@
     - glance
 
 - name: configure mysql for openstack nova
-  command: /bin/openstack-db --service nova --init --rootpw $rootpw -p $svcpw --yes
+  command: /bin/openstack-db --service nova --init --rootpw $rootpw
+           -p $novapw --yes
   tags:
     - openstack_db
     - openstack_db_init
     - nova
+    - nova_init
 
 - name: configure mysql for openstack glance
-  command: /bin/openstack-db --service glance --init --rootpw $rootpw -p $svcpw --yes
+  command: /bin/openstack-db --service glance --init --rootpw $rootpw
+           -p $glancepw --yes
   tags:
     - openstack_db
     - openstack_db_init
     - glance
+    - glance_init
+
+- name: start glance support services
+  service: name=$item state=running enabled=yes
+  tags:
+    - glance
+    - glance_services
+  with_items:
+    - qpidd
+    - libvirtd
+
+- name: start glance services
+  service: name=openstack-glance-$item state=running enabled=yes
+  tags:
+    - glance
+    - glance_services
+  with_items:
+    - api
+    - registry
